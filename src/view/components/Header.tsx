@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 export const Header = () => {
-  const [hide, setHide] = useState(false);
+  const [hide, setHide] = useState(true);
 
   return (
     <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">

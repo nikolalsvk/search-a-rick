@@ -26,14 +26,14 @@ export const CharacterCard = (props: Props) => {
       <div className="px-6 py-4">
         <div className="font-bold text-xl mb-2">{name}</div>
         <p className="text-gray-700 text-base">
-          <div className="flex items-center">
+          <span className="flex items-center">
             <span
               className={`rounded-full bg-${statusColor(
                 status
               )}-400 h-4 w-4 mr-1 flex`}
             ></span>
             {status} - {species}
-          </div>
+          </span>
         </p>
         <p className="text-gray-700 text-base">Gender: {gender}</p>
         <p className="text-gray-700 text-base">
