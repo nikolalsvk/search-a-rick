@@ -10,7 +10,7 @@ export const Search = (props: Props) => {
   return (
     <div className="py-3 lg:py-4 flex-1 lg:mt-2 sm:mt-1">
       <form className="w-full">
-        <div className="flex items-center border-b border-teal-500 py-2">
+        <div className="flex items-center border-b border-pink-500 py-2">
           <label
             className="block text-gray-700 text-sm font-bold "
             htmlFor="term"

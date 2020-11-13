@@ -4,7 +4,7 @@ export const Header = () => {
   const [hide, setHide] = useState(true);
 
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+    <nav className="flex items-center justify-between flex-wrap bg-pink-700 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <span className="font-semibold text-xl tracking-tight">
           🎞 Rick and Morty search 🍿
@@ -13,7 +13,7 @@ export const Header = () => {
       <div className="block lg:hidden">
         <button
           onClick={() => setHide(!hide)}
-          className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
+          className="flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white"
         >
           <svg
             className="fill-current h-3 w-3"
@@ -33,9 +33,9 @@ export const Header = () => {
         <div className="text-sm lg:flex-grow">
           <a
             href="https://rickandmortyapi.com/documentation"
-            className="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+            className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-blue-200 mr-4"
           >
-            Docs
+            API Docs
           </a>
         </div>
       </div>
