@@ -1,14 +1,25 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { useAuth } from "../../context/auth";
+import { clearToken } from "../../service/auth";
 
 export const Header = () => {
+  const { token, setToken } = useAuth();
   const [hide, setHide] = useState(true);
+
+  const logout = () => {
+    clearToken();
+    setToken(null);
+  };
 
   return (
     <nav className="flex items-center justify-between flex-wrap bg-pink-700 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <span className="font-semibold text-xl tracking-tight">
-          🎞 Rick and Morty search 🍿
-        </span>
+        <Link to="/">
+          <span className="font-semibold text-xl tracking-tight">
+            🎞 Rick and Morty search 🍿
+          </span>
+        </Link>
       </div>
       <div className="block lg:hidden">
         <button
@@ -38,7 +49,54 @@ export const Header = () => {
             API Docs
           </a>
         </div>
+        {token ? <LoggedInLinks logout={logout} /> : <LoggedOutLinks />}
       </div>
     </nav>
   );
 };
+
+const LoggedOutLinks = () => (
+  <>
+    <div className="text-sm">
+      <Link
+        to="/login"
+        className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-blue-200 mr-4"
+      >
+        Log In
+      </Link>
+    </div>
+    <div className="text-sm">
+      <Link
+        to="/sign_up"
+        className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-blue-200 mr-4"
+      >
+        Sign Up
+      </Link>
+    </div>
+  </>
+);
+
+interface LoggedInLinksProps {
+  logout: () => void;
+}
+
+const LoggedInLinks = (props: LoggedInLinksProps) => (
+  <>
+    <div className="text-sm">
+      <button
+        onClick={props.logout}
+        className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-blue-200 mr-4"
+      >
+        Sign Out
+      </button>
+    </div>
+    <div className="text-sm">
+      <Link
+        to="/favorites"
+        className="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-blue-200 mr-4"
+      >
+        Favorites
+      </Link>
+    </div>
+  </>
+);
