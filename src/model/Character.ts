@@ -11,3 +11,8 @@ export interface Character {
 interface Origin {
   name: string;
 }
+
+export interface CharacterApiResponse {
+  error?: string;
+  results: Character[];
+}
