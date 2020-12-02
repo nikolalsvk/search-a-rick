@@ -1,6 +1,7 @@
 import { CharacterApiResponse } from "../model/Character";
 import { User, UserPayload, UserResponse } from "../model/User";
-import { RICK_AND_MORTY_ROOT_URL, USERS_ROOT_URL } from "./constants";
+import { FavoritePayload, FavoriteResponse } from "../model/Favorite";
+import { RICK_AND_MORTY_ROOT_URL, BACKEND_ROOT_URL } from "./constants";
 
 export const RICK_AND_MORTY_API = {
   async getCharacters(searchTerm: string): Promise<CharacterApiResponse> {
@@ -14,7 +15,7 @@ export const RICK_AND_MORTY_API = {
 export const USERS_API = {
   async signUp(data: User) {
     return BASIC_API.post<UserResponse, UserPayload>(
-      USERS_ROOT_URL,
+      BACKEND_ROOT_URL,
       "/users/sign_up",
       {
         user: data,
@@ -22,7 +23,7 @@ export const USERS_API = {
     );
   },
   async login(email: string, password: string) {
-    return await fetch(USERS_ROOT_URL + "/users/sign_in", {
+    return await fetch(BACKEND_ROOT_URL + "/users/sign_in", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -33,10 +34,38 @@ export const USERS_API = {
   },
 };
 
+export const FAVORITES_API = {
+  async getFavorites(): Promise<string[]> {
+    return await BASIC_API.getWithToken<string[]>(
+      BACKEND_ROOT_URL,
+      "/favorites"
+    );
+  },
+  async favorite(id: string) {
+    return await BASIC_API.post<FavoriteResponse, FavoritePayload>(
+      BACKEND_ROOT_URL,
+      "/favorites",
+      { id }
+    );
+  },
+};
+
 const BASIC_API = {
   async get<T>(rootUrl: string, path: string): Promise<T> {
     const response = await fetch(rootUrl + path);
 
+    const json = await response.json();
+
+    return json;
+  },
+  async getWithToken<T>(rootUrl: string, path: string): Promise<T> {
+    const response = await fetch(rootUrl + path, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Token": localStorage.getItem("token") || "",
+      },
+    });
     const json = await response.json();
 
     return json;
@@ -51,6 +80,7 @@ const BASIC_API = {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        "Access-Token": localStorage.getItem("token") || "",
       },
       body: JSON.stringify(data),
     });

@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { clearToken } from "../../service/auth";
+import { useFavorites } from "../../context/favorites";
 
 export const Header = () => {
   const { token, setToken } = useAuth();
   const [hide, setHide] = useState(true);
+  const { setFavorites } = useFavorites();
 
   const logout = () => {
     clearToken();
+    setFavorites([]);
     setToken(null);
   };
 

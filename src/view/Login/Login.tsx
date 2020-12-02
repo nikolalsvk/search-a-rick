@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { login } from "../../service/auth";
+import { useFavorites } from "../../context/favorites";
 
 export const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -11,6 +12,7 @@ export const Login = () => {
     passwordValid: true,
   });
   const [requestErrors, setRequestErrors] = useState([]);
+  const { getFavorites } = useFavorites();
   const { setToken } = useAuth();
   const history = useHistory();
 
@@ -40,6 +42,7 @@ export const Login = () => {
       setRequestErrors([]);
 
       setToken(result.token);
+      getFavorites();
       history.push("/");
     }
   };

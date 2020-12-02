@@ -1,24 +1,34 @@
 var express = require("express");
 var router = express.Router();
 
-const low = require("lowdb");
-const FileSync = require("lowdb/adapters/FileSync");
-
-const adapter = new FileSync("db.json");
-const db = low(adapter);
-
-db.defaults({ favorites: [], users: [], count: 0 }).write();
+var database = require("../database");
+var db = database.db;
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
   res.send("respond with a resource");
 });
 
+router.get("/clean_db", function (req, res, next) {
+  database.cleanDb();
+  res.send("respond with a resource");
+});
+
 router.post("/sign_up", function (req, res, next) {
   const user = req.body.user;
+  const email = user.email;
+  const password = user.password;
 
   console.log(user);
-  db.get("users").push(user).write();
+
+  if (userExists(email, password)) {
+    res.send({ errors: ["User already exists"] });
+    return;
+  }
+
+  db.get("users")
+    .push({ ...user, token: generateToken() })
+    .write();
 
   res.send({ success: true });
 });
@@ -28,10 +38,12 @@ router.post("/sign_in", function (req, res, next) {
   var email = req.body.email;
   var password = req.body.password;
 
-  console.log(userExists(email, password));
-  if (userIsRick(email, password) || userExists(email, password)) {
+  const user = userExists(email, password);
+  console.log("User is logged in: ", user);
+
+  if (user) {
     res.set({
-      "Access-Token": "please-enter-123",
+      "Access-Token": user.token,
       "Access-Control-Expose-Headers": "Access-Token",
     });
     res.send({ success: true });
@@ -41,12 +53,15 @@ router.post("/sign_in", function (req, res, next) {
   res.send({ errors: ["Wrong credentials."] });
 });
 
-function userIsRick(email, password) {
-  return email === "test@rick.morty" && password === "beth123";
-}
+const userExists = (email, password) => {
+  if (email === "test@rick.morty" && password === "beth123")
+    return { email, password, token: "please-enter-123" };
 
-function userExists(email, password) {
   return db.get("users").find({ email, password }).value();
-}
+};
+
+const generateToken = () => {
+  return Math.random().toString(36).substring(7);
+};
 
 module.exports = router;
