@@ -1,5 +1,5 @@
 describe("Register flow", () => {
-  afterEach(() => {
+  beforeEach(() => {
     cy.request("http://localhost:3001/users/clean_db");
   });
 
