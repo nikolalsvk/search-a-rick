@@ -11,7 +11,7 @@ export const Login = () => {
     passwordValid: true,
   });
   const [requestErrors, setRequestErrors] = useState([]);
-  const { setToken } = useAuth();
+  // const { setToken } = useAuth();
   const history = useHistory();
 
   useEffect(() => {
@@ -39,7 +39,7 @@ export const Login = () => {
     if (result.success) {
       setRequestErrors([]);
 
-      setToken(result.token);
+      // setToken(result.token);
       history.push("/");
     }
   };
