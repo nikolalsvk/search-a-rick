@@ -9,7 +9,7 @@ import { BrowserRouter } from "react-router-dom";
 
 jest.mock("../../service/auth");
 
-test.skip("shows error", async () => {
+test("shows error", async () => {
   mockedLogin.mockResolvedValueOnce({ errors: ["Try again"] });
 
   render(
@@ -59,6 +59,6 @@ test("logs in the user", async () => {
 
   await waitFor(() => {
     expect(submit).toHaveTextContent("Log In");
-    expect(screen.getByText("Try again")).not.toBeVisible();
+    expect(screen.queryByText("Try again")).not.toBeInTheDocument();
   });
 });
