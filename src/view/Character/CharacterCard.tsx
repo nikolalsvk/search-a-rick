@@ -30,9 +30,7 @@ export const CharacterCard = (props: Props) => {
   };
 
   const isFavorite = (id: string) => {
-    return (
-      favorites.length > 0 && favorites.find((favorite) => favorite === id)
-    );
+    return favorites && favorites.find((favorite) => favorite === id);
   };
 
   return (

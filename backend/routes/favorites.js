@@ -62,7 +62,7 @@ router.post("/", function (req, res, next) {
       .write();
     res.send({
       message: "Success! First character saved as a favorite.",
-      favorites: req.body,
+      favorites: [newFavorite],
     });
     return;
   }
