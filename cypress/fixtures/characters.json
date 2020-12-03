@@ -1,0 +1,6 @@
+{
+  "results": [
+    { "id": 1, "name": "Rick", "origin": { "name": "Earth" } },
+    { "id": 2, "name": "Morty", "origin": { "name": "Earth" } }
+  ]
+}

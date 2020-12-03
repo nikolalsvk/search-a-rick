@@ -27,3 +27,14 @@
 Cypress.Commands.add("getByTestId", (testId) => {
   return cy.get(`[data-testid=${testId}]`);
 });
+
+Cypress.Commands.add("login", () => {
+  cy.request("POST", "http://localhost:3001/users/sign_in", {
+    email: "test@rick.morty",
+    password: "beth123",
+  }).then((response) => {
+    const headers = response.headers;
+
+    localStorage.setItem("token", headers["access-token"]);
+  });
+});

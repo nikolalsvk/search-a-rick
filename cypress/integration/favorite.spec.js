@@ -4,14 +4,30 @@ describe("Favorites", () => {
   });
 
   it("adds character as favorite", () => {
-    cy.visit("/login");
+    /*
+    cy.request("POST", "http://localhost:3001/users/sign_in", {
+      email: "test@rick.morty",
+      password: "beth123",
+    }).then((response) => {
+      const headers = response.headers;
 
-    cy.get("#email").type("test@rick.morty");
-    cy.get("#password").type("beth123");
+      localStorage.setItem("token", headers["access-token"]);
+    });
+    */
 
-    cy.get(".justify-between > .bg-pink-700").click();
+    cy.login();
+
+    cy.intercept("https://rickandmortyapi.com/api/character?name=", {
+      headers: {
+        "Access-Control-Allow-Origin": window.location.origin,
+      },
+      fixture: "characters",
+    });
+
+    cy.visit("/");
 
     cy.url().should("eq", "http://localhost:3000/");
+
     cy.contains("Character name").should("be.visible");
 
     cy.contains("🌟").click();
