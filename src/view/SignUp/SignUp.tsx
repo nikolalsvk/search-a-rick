@@ -109,6 +109,7 @@ export const SignUp = () => {
           type="submit"
           disabled={loading}
           className="bg-pink-700 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded"
+          data-testid="sign-up-button"
         >
           Sign Up
         </button>
