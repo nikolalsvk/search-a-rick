@@ -4,6 +4,7 @@ import { Character } from "../../model/Character";
 interface Props {
   character: Character;
 }
+
 export const CharacterCard = (props: Props) => {
   const { name, image, gender, species, origin, status } = props.character;
 
