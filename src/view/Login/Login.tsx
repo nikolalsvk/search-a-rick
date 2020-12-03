@@ -11,7 +11,7 @@ export const Login = () => {
     passwordValid: true,
   });
   const [requestErrors, setRequestErrors] = useState([]);
-  // const { setToken } = useAuth();
+  const { setToken } = useAuth();
   const history = useHistory();
 
   useEffect(() => {
@@ -30,6 +30,7 @@ export const Login = () => {
     setLoading(true);
 
     const result = await login(formValues.email, formValues.password);
+
     setLoading(false);
 
     if (result.errors) {
@@ -39,7 +40,7 @@ export const Login = () => {
     if (result.success) {
       setRequestErrors([]);
 
-      // setToken(result.token);
+      setToken(result.token);
       history.push("/");
     }
   };
@@ -94,8 +95,10 @@ export const Login = () => {
             </p>
           )}
           <div className="mt-2 flex items-center">
-            {requestErrors.map((error) => (
-              <p className="text-red-500 text-xs">{error}</p>
+            {requestErrors.map((error, index) => (
+              <p key={index} className="text-red-500 text-xs">
+                {error}
+              </p>
             ))}
           </div>
         </div>

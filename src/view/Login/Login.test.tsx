@@ -3,10 +3,15 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { Login } from "./Login";
+import { AuthProvider } from "../../context/auth";
 
 describe("when everything is valid", () => {
   it("renders email and password fields", () => {
-    render(<Login />);
+    render(
+      <AuthProvider>
+        <Login />
+      </AuthProvider>
+    );
 
     const email = screen.getByLabelText("Email");
     const password = screen.getByLabelText("Password");
@@ -18,7 +23,11 @@ describe("when everything is valid", () => {
   test("it saves when user types", () => {
     const emailValue = "mejl@rick.morty";
 
-    render(<Login />);
+    render(
+      <AuthProvider>
+        <Login />
+      </AuthProvider>
+    );
 
     const email = screen.getByLabelText("Email");
     const password = screen.getByLabelText("Password");
@@ -31,7 +40,11 @@ describe("when everything is valid", () => {
   });
 
   test("submits the form", () => {
-    render(<Login />);
+    render(
+      <AuthProvider>
+        <Login />
+      </AuthProvider>
+    );
 
     const email = screen.getByLabelText("Email");
     const password = screen.getByLabelText("Password");

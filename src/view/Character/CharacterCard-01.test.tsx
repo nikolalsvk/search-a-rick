@@ -15,7 +15,7 @@ test("it renders properly", () => {
   expect(imageElement?.src).toMatch("/random_url");
 });
 
-test("it renders properly", () => {
+test("it renders properly with react-testing-library", () => {
   const character = {
     image: "/random_url",
     status: "Alive",
